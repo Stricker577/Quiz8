@@ -45,12 +45,14 @@ const prices = {
  * @swagger
  * /prices:
  *    get:
- *      description: Return all prices
+ *      description: Return all prices 
  *      produces:
  *          - application/json
  *      responses:
  *          200:
  *              description: Object food containing array of food obj with prices
+ *          404:
+ *              description: Error
  */
 app.get('/prices', (req, res) => {
     res.json(prices);
@@ -60,14 +62,18 @@ app.get('/prices', (req, res) => {
  * @swagger
  * /prices:
  *    post:
- *      description: Return all prices
+ *      description: Add a new food item
  *      produces:
  *          - application/json
  *      responses:
  *          200:
- *              description: Object food containing array of food obj with prices
+ *              description: New food added
+ *          404:
+ *              description: Error
  */
 app.post('/prices', (req, res) => {
+    const foodItem = req.body;
+    prices.food.push(foodItem);
     res.json(prices);
 });
 
@@ -75,12 +81,15 @@ app.post('/prices', (req, res) => {
  * @swagger
  * /prices:
  *    patch:
- *      description: Return all prices
+ *      description: Update the name of an item
  *      produces:
  *          - application/json
  *      responses:
  *          200:
- *              description: Object food containing array of food obj with prices
+ *              description: Food Name updated
+ *          404:
+ *              description: Error
+ * 
  */
 app.patch('/prices', (req, res) => {
     res.json(prices);
@@ -90,12 +99,14 @@ app.patch('/prices', (req, res) => {
  * @swagger
  * /prices:
  *    put:
- *      description: Return all prices
+ *      description: Update the price of an item
  *      produces:
  *          - application/json
  *      responses:
  *          200:
- *              description: Object food containing array of food obj with prices
+ *              description: Food Price updated
+ *          404:
+ *              description: Error
  */
 app.put('/prices', (req, res) => {
     res.json(prices);
@@ -105,14 +116,17 @@ app.put('/prices', (req, res) => {
  * @swagger
  * /prices:
  *    delete:
- *      description: Return all prices
+ *      description: delete a food item
  *      produces:
  *          - application/json
  *      responses:
  *          200:
- *              description: Object food containing array of food obj with prices
+ *              description: Food item deleted
+ *          404:
+ *              description: Error
  */
-app.delete('/prices', (req, res) => {
+app.delete('/prices:', (req, res) => {
+    const foodItem = req.params.foodItem;
     res.json(prices);
 });
 
