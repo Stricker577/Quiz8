@@ -56,15 +56,65 @@ app.get('/prices', (req, res) => {
     res.json(prices);
 });
 
-/*
-TODO
+/**
+ * @swagger
+ * /prices:
+ *    post:
+ *      description: Return all prices
+ *      produces:
+ *          - application/json
+ *      responses:
+ *          200:
+ *              description: Object food containing array of food obj with prices
+ */
+app.post('/prices', (req, res) => {
+    res.json(prices);
+});
 
-Continue the REST-like API and add at least
-1 POST request endpoint
-1 PATCH request endpoint
-1 PUT request endpoint
-1 DELETE request endpoint
-*/
+/**
+ * @swagger
+ * /prices:
+ *    patch:
+ *      description: Return all prices
+ *      produces:
+ *          - application/json
+ *      responses:
+ *          200:
+ *              description: Object food containing array of food obj with prices
+ */
+app.patch('/prices', (req, res) => {
+    res.json(prices);
+});
+
+/**
+ * @swagger
+ * /prices:
+ *    put:
+ *      description: Return all prices
+ *      produces:
+ *          - application/json
+ *      responses:
+ *          200:
+ *              description: Object food containing array of food obj with prices
+ */
+app.put('/prices', (req, res) => {
+    res.json(prices);
+});
+
+/**
+ * @swagger
+ * /prices:
+ *    delete:
+ *      description: Return all prices
+ *      produces:
+ *          - application/json
+ *      responses:
+ *          200:
+ *              description: Object food containing array of food obj with prices
+ */
+app.delete('/prices', (req, res) => {
+    res.json(prices);
+});
 
 app.listen(port, () => {
     console.log(`API served at http://localhost:${port}`);
