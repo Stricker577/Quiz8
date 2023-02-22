@@ -85,8 +85,10 @@ app.post('/prices/:foodName', (req, res) => {
     const { foodName } = req.params;
     const { foodPrice } = req.query;
     const foodItem = { name: foodName, price: foodPrice };
-    prices.food.push(foodItem);
-    res.json(prices);
+    
+        prices.food.push(foodItem);
+        res.json(prices);
+    
 });
 
 /**
@@ -116,9 +118,13 @@ app.patch('/prices/:foodName', (req, res) => {
     const { foodName } = req.params;
     const { newName } = req.query;
     const foodItem = prices.food.find((findName) => findName.name === foodName);
-    foodItem.name = newName;
-    res.json(prices);
-  });
+    if (foodItem){
+        foodItem.name = newName;
+        res.json(prices);
+    } else {
+        res.status(404).json('Food item could not be found')
+    }
+});
 
 /**
  * @swagger
@@ -146,10 +152,14 @@ app.patch('/prices/:foodName', (req, res) => {
 app.put('/prices/:foodName', (req, res) => {
     const { foodName } = req.params;
     const { newPrice } = req.query;
-    const foodItem = prices.food.find(item => item.name === foodName);
-    foodItem.price = Number(newPrice);
-    res.json(prices);
-  });
+    const foodItem = prices.food.find(findName => findName.name === foodName);
+    if (foodItem){
+        foodItem.price = Number(newPrice);
+        res.json(prices);
+    } else {
+        res.status(404).json('Food item could not be found')
+    }
+});
 
 /**
  * @swagger
@@ -170,10 +180,14 @@ app.put('/prices/:foodName', (req, res) => {
  */
 app.delete('/prices/:foodName', (req, res) => {
     const { foodName } = req.params;
-    const index = prices.food.findIndex(item => item.name === foodName);
-    prices.food.splice(index, 1);
-    res.json(prices);
-  });
+    const foodItem = prices.food.findIndex(findName => findName.name === foodName);
+    if (foodItem >= 0){
+        prices.food.splice(foodItem, 1);
+        res.json(prices);
+    } else {
+        res.status(404).json('Food item could not be found')
+    }
+});
   
 
 app.listen(port, () => {
