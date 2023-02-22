@@ -60,26 +60,47 @@ app.get('/prices', (req, res) => {
 
 /**
  * @swagger
- * /prices:
- *    post:
- *      description: Add a new food item
+ * /prices/{foodName}:
+ *    patch:
+ *      description: Update the name of an item
  *      produces:
  *          - application/json
+ * */
+
+/**
+ * @swagger
+ * /prices/{foodName}:
+ *    post:
+ *      description: Adds a new food
+ *      parameters:
+ *          - name: foodName
+ *            in: path
+ *            description: Name of pet that needs to be updated
+ *            schema:
+ *              type: string
+ *          - name: price
+ *            in: query
+ *            description: price of the food
+ *            schema:
+ *              type: integer
+ *              format: int64
  *      responses:
  *          200:
- *              description: New food added
+ *              description: Food Name updated
  *          404:
  *              description: Error
  */
-app.post('/prices', (req, res) => {
-    const foodItem = req.body;
+app.post('/prices/:foodName', (req, res) => {
+    const { foodName } = req.params;
+    const { foodPrice } = req.query;
+    const foodItem = { name: foodName, price: foodPrice };
     prices.food.push(foodItem);
     res.json(prices);
 });
 
 /**
  * @swagger
- * /prices:
+ * /prices/{foodName}:
  *    patch:
  *      description: Update the name of an item
  *      produces:
@@ -91,8 +112,14 @@ app.post('/prices', (req, res) => {
  *              description: Error
  * 
  */
-app.patch('/prices', (req, res) => {
-    res.json(prices);
+app.patch('/prices/:foodName', (req, res) => {
+    const foodIndex = prices.food.findIndex(item => item.name === req.params)
+    if (foodIndex !== -1) {
+        prices.food[foodIndex].price = req.body;
+        res.json(prices);
+    } else {
+        res.status(404).json({ message: 'Food item not found' });
+    }
 });
 
 /**
@@ -131,5 +158,5 @@ app.delete('/prices:', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`API served at http://localhost:${port}`);
+    console.log(`API served at http://localhost:${port}/docs`);
 })
