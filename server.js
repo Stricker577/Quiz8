@@ -85,9 +85,8 @@ app.post('/prices/:foodName', (req, res) => {
     const { foodName } = req.params;
     const { foodPrice } = req.query;
     const foodItem = { name: foodName, price: foodPrice };
-    
-        prices.food.push(foodItem);
-        res.json(prices);
+    prices.food.push(foodItem);
+    res.json(prices);
     
 });
 
